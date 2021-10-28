@@ -18,7 +18,6 @@ const Register = ({
 
 	const [email, setEmail] = useState("");
 	const [confirmPassword, setconfirmPassword] = useState("");
-	const [admin, setAdmin] = useState(false);
 
 	const confirmPasswords = (event) => {
 		event.preventDefault();

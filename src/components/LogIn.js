@@ -12,7 +12,7 @@ const LogIn = ({username, password, setUsername, setPassword, setUserToken, logg
 	const logInRequest = async (event) => {
 		event.preventDefault();
 		try {
-            // USE API LOG IN FUNCTION HERE
+            // USE API LOG IN FUNCTION HE
 			const user = {username, password};
 			const data = await API.makeRequest('/users/login', 'POST', user);
 			if (data.error) {
@@ -22,6 +22,7 @@ const LogIn = ({username, password, setUsername, setPassword, setUserToken, logg
 				localStorage.setItem(`Token`, token);
 				setUserToken(token);
 				setLoggedIn(true);
+				localStorage.setItem(`Active`, true );
 				setUsername(username);
 
 				localStorage.setItem(`Username`, username);
