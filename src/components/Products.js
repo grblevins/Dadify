@@ -118,13 +118,13 @@ console.log('PRODUCT ID', productId);
                             </div>
                         :
                             <>
-                                {/* <div>
+                                <div>
                                 <button onClick={(e) => sendToCart(e, productId)}>Add to Cart</button>
                                 </div>
                                 <div>
                                 <button onClick={(e) => deleteProduct(e, productId)}>Delete</button>
                                 </div>
-                                <button>Edit Product</button> */}
+                                <button>Edit Product</button>
                                 <button onClick={(e) => sendToCart(e, productId)}>Add to Cart</button>
                             </>
                 }
