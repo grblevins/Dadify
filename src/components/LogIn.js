@@ -1,31 +1,32 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {useHistory, Link} from "react-router-dom";
-// import { log in function -> handleLogIn } from '../api/index';
-
 import API from '../api/api';
 
 const LogIn = ({username, password, setUsername, setPassword, setUserToken, loggedIn, setLoggedIn}) => {
 	const history = useHistory()
 
-	// const [user, setUser] = useState({username, password});
-
 	const logInRequest = async (event) => {
 		event.preventDefault();
 		try {
-            // USE API LOG IN FUNCTION HE
 			const user = {username, password};
 			const data = await API.makeRequest('/users/login', 'POST', user);
+			// const cartData = await API.makeRequest(`/cart/${data.id}`, 'GET')
+			// console.log(cartData);
 			if (data.error) {
 				history.push("/message");
 			} else {
 				const token = data.token;
+				const user_id = data.id;
 				localStorage.setItem(`Token`, token);
 				setUserToken(token);
 				setLoggedIn(true);
 				localStorage.setItem(`Active`, true );
 				setUsername(username);
-
+				localStorage.setItem(`UserId`, user_id);
 				localStorage.setItem(`Username`, username);
+				// const user_id = localStorage.getItem('UserId')
+				const cartData = await API.makeRequest(`/cart/${user_id}`, 'GET')
+				console.log(cartData);
 				history.push("/");
 			}
 		} catch (error) {
@@ -44,7 +45,6 @@ const LogIn = ({username, password, setUsername, setPassword, setUserToken, logg
 					<div className="loginMenu">
 					</div>
 					<div className="loginMenuContent">
-                        {/* logInRequest TRIGGERS API CALL */}
 						<form onSubmit={logInRequest}>
 							<div className="loginInputs">
 								<h2>username </h2>

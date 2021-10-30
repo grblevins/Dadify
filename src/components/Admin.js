@@ -4,14 +4,18 @@ import api from '../api/api';
 
 const Admin = (username) => {
 
-	// const [isAdmin, setIsAdmin] = useState(null);
-	
-	// try {
-	// 	const data = await api.makeRequest(`/users`, `GET`)
-	// } catch (error) {
-	// 	throw error;
-	// }
+	const [user, setUser] = useState([]);
 
+	const userSearchRequest = async (event) => {
+		event.preventDefault();
+		try {
+			const data = await api.makeRequest(`/users/${username}`);
+			setUser(data)
+			return user;
+		} catch (error) {
+			throw error;
+		}
+	}
 
 	return (
 		<div id="admin">

@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
-import {useHistory, Link} from 'react-router-dom'
-// import { log in function -> handleRegister } from '../api/index';
+import {useHistory} from 'react-router-dom'
 import API from '../api/api';
 
 const Register = ({
@@ -9,12 +8,9 @@ const Register = ({
 	setUsername, 
 	setPassword, 
 	setRegisterToken, 
-	registerToken, 
 	setLoggedIn }) => {
 
 	const history = useHistory();
-	// const [username, setUsername] = useState("");
-	// const [password, setPassword] = useState("");
 
 	const [email, setEmail] = useState("");
 	const [confirmPassword, setconfirmPassword] = useState("");
@@ -34,28 +30,35 @@ const Register = ({
 		try {
 			const user = {username, password, email};
 			const data = await API.makeRequest('/users/register', 'POST', user)
-			if (data.success === false) {
+			const token = data.token;
+			const cartData = await API.makeRequest(`/cart/${data.id}`, 'POST', {total: 0})
+			console.log(cartData);
+			if (token) {
+				localStorage.setItem(`Token`, token);
 				setEmail("");
 				setUsername("");
 				setPassword("");
 				setconfirmPassword("");
-			} else {
-				const token = data.token;
-				localStorage.setItem(`Token`, token);
 				setRegisterToken(token);
-				setUsername(username);
-				setLoggedIn(false);
-				localStorage.setItem(`Username`, username);
-				console.log(data);
+				await API.makeRequest('/users/login', 'POST', user)
+				history.push('/');
+				// const cartData = await API.makeRequest(`/cart/${data.id}`, 'POST', {total: 0})
+				// console.log(cartData);
+				// alert(data.message)
+			} else {
+				// const token = data.token;
+				// localStorage.setItem(`Token`, token);
+				// setRegisterToken(token);
+				// setUsername(username);
+				// setLoggedIn(false);
+				// localStorage.setItem(`Username`, username);
+				// console.log(data);
+				alert(data.message)
 			}
 		} catch (error) {
 			console.error(error);
 		}
 	};
-
-	// if (registerToken) {
-	// 	history.push("/")
-	// }
 
 	return (
 		<div>
