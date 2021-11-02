@@ -154,7 +154,8 @@ const EditProduct = ({setRender, productBoard, setProductBoard, isAdmin, setEdit
 }
 
 const ProductBoard = ({
-    productBoard, setProductBoard,loggedIn,
+    loggedIn,
+    productBoard, setProductBoard,
     editProduct, setEditProduct,
     isAdmin, setRender
 }) => {
@@ -184,7 +185,7 @@ const ProductBoard = ({
         }
     }
 
-    async function deleteProduct(id) {
+    async function deleteProduct(e, id) {
         // console.log('DELETE ID IS:', id);
         try {
             const deleteItem = await API.makeRequest(`/products/${id}`, 'DELETE');
